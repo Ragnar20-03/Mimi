@@ -3,16 +3,15 @@ const mongoose = require("mongoose");
 const { DB_URL } = require("../Config/dotenv");
 const { string } = require("zod");
 
-const startMongo = () => {
-  mongoose
-    .connect(DB_URL)
-    .then((res1) => {
-      console.log("mongodb Commected Succcesfully !");
-    })
-    .catch((err) => {
-      console.log("failed to start mongoose !");
-    });
-};
+mongoose
+  .connect(DB_URL)
+  .then((res1) => {
+    console.log("mongodb Commected Succcesfully !");
+  })
+  .catch((err) => {
+    console.log("failed to start mongoose !");
+  });
+
 const userSchema = new mongoose.Schema({
   username: String,
   password: String,
@@ -53,4 +52,4 @@ const User = mongoose.model("user", userSchema);
 const Post = mongoose.model("post", postSchema);
 const Comment = mongoose.model("comments", commentSchema);
 
-module.exports = startMongo;
+module.exports = { User, Post, Comment };

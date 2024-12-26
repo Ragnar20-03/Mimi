@@ -60,11 +60,11 @@ router.post("/register", async (req, res) => {
 
 router.post("/add-post", M_userMiddleware, async (req, res) => {
   const { description, location, date } = req.body;
-
+  console.log("hererererer");
   Post.create({
     description: description,
     location: location,
-    date: date,
+    date: Date.now(),
     imageUrl: "#",
     likes: [],
     comments: [],
@@ -72,7 +72,7 @@ router.post("/add-post", M_userMiddleware, async (req, res) => {
     .then(async (res1) => {
       let uid = req.userId;
       let user = await User.findByIdAndUpdate({ _id: uid });
-      await user.updateOne({ $push: { posts: res1._id } });
+      await user.updateOne({ $push: { post: res1._id } });
 
       res.status(200).json({
         msg: "Post Added Succesfully !",
