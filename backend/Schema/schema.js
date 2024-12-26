@@ -17,7 +17,11 @@ const userSchema = new mongoose.Schema({
      fname: String,
      lname: String,
      email: String,
-     profilePic: String
+     profilePic: String,
+     post: [{
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'posts'
+     }]
 })
 
 const postSchema = new mongoose.Schema({
