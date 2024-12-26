@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
 const { DB_URL } = require("../Config/dotenv");
+const { string } = require("zod");
 
 const startMongo = () => {
 
@@ -20,17 +21,26 @@ const userSchema = new mongoose.Schema({
 })
 
 const postSchema = new mongoose.Schema({
+     description: String,
+     location: String,
+     date: Date,
+     imageUrl: String,
      likes: [{
           uid: {
                type: mongoose.Schema.Types.ObjectId,
                ref: 'user'
           }
      }],
-     Comments: [{
-          uid: {
-               type: mongoose.Schema.Types.ObjectId,
-               ref: 'user'
-          }
-     }]
+     comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "comments" }]
 })
+
+const commentSchema = new mongoose.Schema({
+     uid: { type: mongoose.Schema.Types.ObjectId, ref: "user" },
+     comment: String
+})
+
+const User = mongoose.model('user', userSchema);
+const Post = mongoose.model('post', postSchema);
+const Comment = mongoose.model('comments', commentSchema);
+
 module.exports = startMongo
