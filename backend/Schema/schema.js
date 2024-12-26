@@ -3,9 +3,8 @@ const mongoose = require("mongoose");
 const { DB_URL } = require("../Config/dotenv");
 const { string } = require("zod");
 
-const startMongo = async () => {
-  console.log("here");
-  await mongoose
+const startMongo = () => {
+  mongoose
     .connect(DB_URL)
     .then((res1) => {
       console.log("mongodb Commected Succcesfully !");
@@ -21,6 +20,12 @@ const userSchema = new mongoose.Schema({
   lname: String,
   email: String,
   profilePic: String,
+  post: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "posts",
+    },
+  ],
 });
 
 const postSchema = new mongoose.Schema({
@@ -48,4 +53,4 @@ const User = mongoose.model("user", userSchema);
 const Post = mongoose.model("post", postSchema);
 const Comment = mongoose.model("comments", commentSchema);
 
-module.exports = { startMongo, User, Post, Comment };
+module.exports = startMongo;
